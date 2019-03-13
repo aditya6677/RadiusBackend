@@ -21,16 +21,16 @@ exports.getRepoDetails = async (req,res) =>{
         let dumpAPI = `https://api.github.com/repos/${user}/${repo}`;
         for(let i=0;i<3;i++){
             if(i==0){
-                let issue24 = await axios(dumpAPI+'/issues?state=open&since='+last24time+'&client_id=096b9ffd257381e2cd8c&client_secret=d969acb07b7e82b0b1b2d468c44359aa439e63aa');
+                let issue24 = await axios(dumpAPI+'/issues?state=open&since='+last24time+'&client_id=096b9ffd257381e2cd8c&client_secret=d969acb07b7e82b0b1b2d468c44359aa439e63aa&per_page=100');
                 last24 = issue24.data.length;
             }
             if(i==1){
-                let issue7 = await axios(dumpAPI+'/issues?state=open&since='+last7time+'&client_id=096b9ffd257381e2cd8c&client_secret=d969acb07b7e82b0b1b2d468c44359aa439e63aa');
+                let issue7 = await axios(dumpAPI+'/issues?state=open&since='+last7time+'&client_id=096b9ffd257381e2cd8c&client_secret=d969acb07b7e82b0b1b2d468c44359aa439e63aa&per_page=100');
                 last7 = issue7.data.length;
             }
             if(i==2){
-                let issue7m = await axios(dumpAPI+'/issues?state=open&client_id=096b9ffd257381e2cd8c&client_secret=d969acb07b7e82b0b1b2d468c44359aa439e63aa');
-                more7 = issue7m.data.length;
+                let issue7m = await axios(dumpAPI+'?client_id=096b9ffd257381e2cd8c&client_secret=d969acb07b7e82b0b1b2d468c44359aa439e63aa');
+                more7 = issue7m.data.open_issues_count;
             }
         }
         basicInfo.last24 = last24;
